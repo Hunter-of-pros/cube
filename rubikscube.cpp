@@ -45,9 +45,64 @@ class userCube: public cube{
     //if user has a cube and wants to see the cube and enter the colors he gets the moves to solve it 
 };
 class computerCube: public cube{
+    public:
     //if user doesn't have the actual cube and wants to mix and solve in this itself
-    
+    void display(){
+        for (int i=0; i<4;i++){
+            if(i==0){
+                for(int k=0;k<3;k++){
+                    cout<<endl<<"\t";
+                    for(int l=0;l<3;l++){
+                        cout<<red[k][l]<<" ";
+                    }
+                }
+                cout<<"\n\n";
+            }
+            if(i==1){
+                for(int k=0;k<3;k++){
+                    cout<<endl<<"\t";
+                    for(int l=0;l<3;l++){
+                        cout<<yellow[k][l]<<" ";
+                    }
+                }
+                cout<<"\n\n\n";
+            }
+            if(i==2){
+                for(int k=0;k<3;k++){
+                    for(int l=0;l<3;l++){
+                        cout<<green[k][l]<<" ";  
+                    }
+                    cout<<"\t";
+                    for(int l1=0;l1<3;l1++){
+                        cout<<orange[k][l1]<<" ";  
+                    }
+                    cout<<"\t";
+                    for(int l2=0;l2<3;l2++){
+                        cout<<blue[k][l2]<<" ";
+                    }
+                    cout<<endl;
+                }
+                cout<<"\n";
+
+            }
+            
+            if(i==3){
+                for(int k=0;k<3;k++){
+                    cout<<endl<<"\t";
+                    for(int l=0;l<3;l++){
+                        cout<<white[k][l]<<" ";
+                    }
+                }
+                cout<<endl;
+                
+            }
+            
+
+        }
+    }
 };
 int main(){
+    computerCube c;
+    c.display();
     return 0;
 }
