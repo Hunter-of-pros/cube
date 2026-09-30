@@ -1,15 +1,15 @@
 #include <iostream>
 using namespace std;
-
 class cube{
 public:
-    
 char w = 'W';
 char o = 'O';
 char b = 'B';
 char r = 'R';
 char g = 'G';
 char y ='Y';
+
+
 char white [3][3]={
     {w,w,w},
     {w,w,w},
@@ -40,6 +40,8 @@ char yellow [3][3]={
     {y,y,y},
     {y,y,y}
 };
+
+
 };
 class userCube: public cube{
     //if user has a cube and wants to see the cube and enter the colors he gets the moves to solve it 
@@ -49,6 +51,7 @@ class computerCube: public cube{
     //if user doesn't have the actual cube and wants to mix and solve in this itself
     void display(){
         for (int i=0; i<4;i++){
+
             if(i==0){
                 for(int k=0;k<3;k++){
                     cout<<endl<<"\t";
@@ -58,6 +61,7 @@ class computerCube: public cube{
                 }
                 cout<<"\n\n";
             }
+
             if(i==1){
                 for(int k=0;k<3;k++){
                     cout<<endl<<"\t";
@@ -67,6 +71,7 @@ class computerCube: public cube{
                 }
                 cout<<"\n\n\n";
             }
+
             if(i==2){
                 for(int k=0;k<3;k++){
                     for(int l=0;l<3;l++){
@@ -83,7 +88,6 @@ class computerCube: public cube{
                     cout<<endl;
                 }
                 cout<<"\n";
-
             }
             
             if(i==3){
@@ -94,15 +98,67 @@ class computerCube: public cube{
                     }
                 }
                 cout<<endl;
-                
             }
-            
+        }
+    }
 
+    void moves() {
+        char move;
+        cout << "Enter move (R, r) or Q to quit: ";
+        while (cin >> move) {
+            if (move == 'Q' || move == 'q') break;
+
+            if (move == 'R') {
+                char temp_blue[3][3];
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        temp_blue[j][2 - i] = blue[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        blue[i][j] = temp_blue[i][j];
+                    }
+                }
+
+                for (int i = 0; i < 3; i++) {
+                    char temp = orange[i][2];
+                    orange[i][2] = white[i][2];
+                    white[i][2] = red[i][2];
+                    red[i][2] = yellow[i][2];
+                    yellow[i][2] = temp;
+                }
+            } else if (move == 'r') {
+                char temp_blue[3][3];
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        temp_blue[2 - j][i] = blue[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        blue[i][j] = temp_blue[i][j];
+                    }
+                }
+
+                for (int i = 0; i < 3; i++) {
+                    char temp = orange[i][2];
+                    orange[i][2] = yellow[i][2];
+                    yellow[i][2] = red[i][2];
+                    red[i][2] = white[i][2];
+                    white[i][2] = temp;
+                }
+            } else {
+                cout << "Invalid move.\n";
+            }
+            display();
+            cout << "Enter move (R or r) or Q to quit: ";
         }
     }
 };
 int main(){
     computerCube c;
     c.display();
+    c.moves();
     return 0;
 }
