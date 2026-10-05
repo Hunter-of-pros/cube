@@ -104,7 +104,7 @@ class computerCube: public cube{
 
     void moves() {
         char move;
-        cout << "Enter move (R, r) or Q to quit: ";
+        cout << "Enter move (R, r, L, l, U, u, D, d, F, f, B, b) or Q to quit: ";
         while (cin >> move) {
             if (move == 'Q' || move == 'q') break;
 
@@ -148,11 +148,201 @@ class computerCube: public cube{
                     red[i][2] = white[i][2];
                     white[i][2] = temp;
                 }
+            } else if (move == 'L') {
+                char temp_green[3][3];
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        temp_green[j][2 - i] = green[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        green[i][j] = temp_green[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    char temp = orange[i][0];
+                    orange[i][0] = yellow[i][0];
+                    yellow[i][0] = red[i][0];
+                    red[i][0] = white[i][0];
+                    white[i][0] = temp;
+                }
+            } else if (move == 'l') {
+                char temp_green[3][3];
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        temp_green[2 - j][i] = green[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        green[i][j] = temp_green[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    char temp = orange[i][0];
+                    orange[i][0] = white[i][0];
+                    white[i][0] = red[i][0];
+                    red[i][0] = yellow[i][0];
+                    yellow[i][0] = temp;
+                }
+            } else if (move == 'U') {
+                char temp_yellow[3][3];
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        temp_yellow[j][2 - i] = yellow[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        yellow[i][j] = temp_yellow[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    char temp = orange[0][i];
+                    orange[0][i] = blue[0][i];
+                    blue[0][i] = red[2][2 - i];
+                    red[2][2 - i] = green[0][i];
+                    green[0][i] = temp;
+                }
+            } else if (move == 'u') {
+                char temp_yellow[3][3];
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        temp_yellow[2 - j][i] = yellow[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        yellow[i][j] = temp_yellow[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    char temp = orange[0][i];
+                    orange[0][i] = green[0][i];
+                    green[0][i] = red[2][2 - i];
+                    red[2][2 - i] = blue[0][i];
+                    blue[0][i] = temp;
+                }
+            } else if (move == 'D') {
+                char temp_white[3][3];
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        temp_white[j][2 - i] = white[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        white[i][j] = temp_white[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    char temp = orange[2][i];
+                    orange[2][i] = green[2][i];
+                    green[2][i] = red[0][2 - i];
+                    red[0][2 - i] = blue[2][i];
+                    blue[2][i] = temp;
+                }
+            } else if (move == 'd') {
+                char temp_white[3][3];
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        temp_white[2 - j][i] = white[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        white[i][j] = temp_white[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    char temp = orange[2][i];
+                    orange[2][i] = blue[2][i];
+                    blue[2][i] = red[0][2 - i];
+                    red[0][2 - i] = green[2][i];
+                    green[2][i] = temp;
+                }
+            } else if (move == 'F') {
+                char temp_orange[3][3];
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        temp_orange[j][2 - i] = orange[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        orange[i][j] = temp_orange[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    char temp = yellow[2][i];
+                    yellow[2][i] = green[2 - i][2];
+                    green[2 - i][2] = white[0][2 - i];
+                    white[0][2 - i] = blue[i][0];
+                    blue[i][0] = temp;
+                }
+            } else if (move == 'f') {
+                char temp_orange[3][3];
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        temp_orange[2 - j][i] = orange[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        orange[i][j] = temp_orange[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    char temp = yellow[2][i];
+                    yellow[2][i] = blue[i][0];
+                    blue[i][0] = white[0][2 - i];
+                    white[0][2 - i] = green[2 - i][2];
+                    green[2 - i][2] = temp;
+                }
+            } else if (move == 'B') {
+                char temp_red[3][3];
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        temp_red[j][2 - i] = red[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        red[i][j] = temp_red[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    char temp = yellow[0][i];
+                    yellow[0][i] = blue[i][2];
+                    blue[i][2] = white[2][2 - i];
+                    white[2][2 - i] = green[2 - i][0];
+                    green[2 - i][0] = temp;
+                }
+            } else if (move == 'b') {
+                char temp_red[3][3];
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        temp_red[2 - j][i] = red[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        red[i][j] = temp_red[i][j];
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    char temp = yellow[0][i];
+                    yellow[0][i] = green[2 - i][0];
+                    green[2 - i][0] = white[2][2 - i];
+                    white[2][2 - i] = blue[i][2];
+                    blue[i][2] = temp;
+                }
             } else {
                 cout << "Invalid move.\n";
             }
             display();
-            cout << "Enter move (R or r) or Q to quit: ";
+            cout << "Enter move (R, r, L, l, U, u, D, d, F, f, B, b) or Q to quit: ";
         }
     }
 };
