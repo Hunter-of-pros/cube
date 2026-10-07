@@ -355,7 +355,7 @@
             return true;
         }
 
-        string scramble() {
+        string shuffle() {
             srand(time(0));
             char validMoves[] = {'R', 'r', 'L', 'l', 'U', 'u', 'D', 'd', 'F', 'f', 'B', 'b'};
             string sequence = "";
@@ -364,7 +364,7 @@
                 sequence += m;
                 makeMove(m);
             }
-            cout << "Scramble sequence: ";
+            cout << "shuffle sequence: ";
             for (int i = 0; i < sequence.length(); i++) cout << sequence[i] << " ";
             cout << endl;
             return sequence;
@@ -401,7 +401,7 @@
         c.display();
         if (c.isSolved()) cout << "Cube is initially solved.\n";
         cout << "Shuffling the cube\n";
-        string seq = c.scramble();
+        string seq = c.shuffle();
         c.display();
         if (!c.isSolved()) cout << "Cube is now shuffled.\n";
         
