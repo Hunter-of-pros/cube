@@ -341,6 +341,87 @@
             }
         }
 
+        bool isWhiteCrossSolved(int pieces) {
+            if (pieces >= 1 && !(white[0][1] == white[1][1] && orange[2][1] == orange[1][1])) return false;
+            if (pieces >= 2 && !(white[1][0] == white[1][1] && green[2][1] == green[1][1])) return false;
+            if (pieces >= 3 && !(white[2][1] == white[1][1] && red[0][1] == red[1][1])) return false;
+            if (pieces >= 4 && !(white[1][2] == white[1][1] && blue[2][1] == blue[1][1])) return false;
+            return true;
+        }
+
+        bool dfsCross(int pieces_to_solve, int depth_remaining, string& path) {
+            if (depth_remaining == 0) {
+                return isWhiteCrossSolved(pieces_to_solve);
+            }
+            
+            char moves[] = {'R', 'r', 'L', 'l', 'U', 'u', 'D', 'd', 'F', 'f', 'B', 'b'};
+            for (char m : moves) {
+                int len = path.length();
+                if (len >= 1) {
+                    char last = path.back();
+                    if (m == 'R' && last == 'r') continue;
+                    if (m == 'r' && last == 'R') continue;
+                    if (m == 'L' && last == 'l') continue;
+                    if (m == 'l' && last == 'L') continue;
+                    if (m == 'U' && last == 'u') continue;
+                    if (m == 'u' && last == 'U') continue;
+                    if (m == 'D' && last == 'd') continue;
+                    if (m == 'd' && last == 'D') continue;
+                    if (m == 'F' && last == 'f') continue;
+                    if (m == 'f' && last == 'F') continue;
+                    if (m == 'B' && last == 'b') continue;
+                    if (m == 'b' && last == 'B') continue;
+                }
+                if (len >= 2) {
+                    if (m == path.back() && m == path[len-2]) continue;
+                }
+                
+                makeMove(m);
+                path.push_back(m);
+                
+                if (dfsCross(pieces_to_solve, depth_remaining - 1, path)) {
+                    return true;
+                }
+                
+                path.pop_back();
+                char inv = (m >= 'A' && m <= 'Z') ? (m + 32) : (m - 32);
+                makeMove(inv);
+            }
+            return false;
+        }
+
+        string iddfsCross(int pieces_to_solve, int max_depth) {
+            for (int depth = 0; depth <= max_depth; depth++) {
+                string path = "";
+                if (dfsCross(pieces_to_solve, depth, path)) {
+                    return path;
+                }
+            }
+            return "";
+        }
+
+        string solveWhiteCross() {
+            cout << "\n========================================\n";
+            cout << "        SOLVING WHITE CROSS             \n";
+            cout << "========================================\n";
+            string full_path = "";
+            for (int p = 1; p <= 4; p++) {
+                string path = iddfsCross(p, 8);
+                for (int i = 0; i < path.length(); i++) {
+                    full_path += path[i];
+                    full_path += " ";
+                }
+            }
+            if (full_path.empty()) {
+                cout << "\nThe White Cross is already solved!\n";
+            } else {
+                cout << "\nSUCCESS! Moves used to solve White Cross:\n";
+                cout << "-> " << full_path << " <-\n";
+            }
+            cout << "========================================\n\n";
+            return full_path;
+        }
+
         bool isSolved() {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
@@ -383,16 +464,21 @@
 
         void moves() {
             char move;
-            cout << "Enter move (R, r, L, l, U, u, D, d, F, f, B, b) or Q to quit: ";
+            cout << "Enter move (R, r, L, l, U, u, D, d, F, f, B, b), C to solve White Cross, or Q to quit: ";
             while (cin >> move) {
                 if (move == 'Q' || move == 'q') break;
                 
-                makeMove(move);
-                display();
-                if (isSolved()) {
-                    cout << "Cube is solved!\n";
+                if (move == 'C' || move == 'c') {
+                    solveWhiteCross();
+                    display();
+                } else {
+                    makeMove(move);
+                    display();
+                    if (isSolved()) {
+                        cout << "Cube is solved!\n";
+                    }
                 }
-                cout << "Enter move (R, r, L, l, U, u, D, d, F, f, B, b) or Q to quit: ";
+                cout << "Enter move (R, r, L, l, U, u, D, d, F, f, B, b), C to solve White Cross, or Q to quit: ";
             }
         }
     };
@@ -400,16 +486,17 @@
         computerCube c;
         c.display();
         if (c.isSolved()) cout << "Cube is initially solved.\n";
+        
+        cout << "\n--- DEMO: SHUFFLE AND SOLVE WHITE CROSS ---\n";
         cout << "Shuffling the cube\n";
         string seq = c.shuffle();
         c.display();
-        if (!c.isSolved()) cout << "Cube is now shuffled.\n";
         
-        c.reverseSequence(seq);
+        c.solveWhiteCross();
         c.display();
-        if (c.isSolved()) cout << "Solved cube again from reversing the moves used to shuffle!\n";
-        else cout << "Cube failed to return to solved state.\n";
         
+        cout << "\n--- ENTERING INTERACTIVE MODE ---\n";
+        cout << "You can shuffle manually and press 'C' to solve the white cross anytime.\n";
         c.moves();
         return 0;
     }
